@@ -20,13 +20,24 @@ class Controller {
     }
   }
 
+  static async getAllTodosUser(req, res) {
+    try {
+      const { userId } = req.params;
+      const data = await todos.findAll({ where: { userId } });
+      res.status(200).json(data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
   static async getTodoById(req, res) {
     try {
-      const data = await todos.findByPk(req.params.id);
+      const { id } = req.params;
+      const data = await todos.findAll({ where: { id } });
       if (!data) {
         res.status(404).json({ message: "Todo not found" });
       }
-      res.json(data);
+      res.status(200).json(data);
     } catch (error) {
       console.log(error.message);
     }
